@@ -19,17 +19,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('/test')->group(function () {
-    Route::post('actions', 'ActionController@store');
-    Route::post('actions/{action_id}/tasks', 'ActionController@storeLists');
+    Route::post('user/{user_id}/actions', 'ActionController@store');
+    Route::post('user/{user_id}/actions/{action_id}/tasks', 'ActionController@storeLists');
     Route::post('register', 'Api\AuthController@register');
     Route::post('login', 'Api\AuthController@login');
 
-    Route::get('actions', 'ActionController@show');
-    Route::get('actions/{action_id}', 'ActionController@getActionById');
+    Route::get('user/{user_id}/actions', 'ActionController@show');
+    // Route::get('user/{user_id}/actions/{action_id}', 'ActionController@getActionById'); // poka chto ne nujno
+    Route::get('user/{user_id}/actions/{action_id}/tasks', 'ActionController@getTasksbyID');
 
-    Route::patch('actions/{action_id}', 'ActionController@actionUpdate');
-    Route::patch('actions/{action_id}/tasks/{task_id}', 'ActionController@taskUpdate');
+    Route::patch('user/{user_id}/actions/{action_id}', 'ActionController@actionUpdate');
+    Route::patch('user/{user_id}/actions/{action_id}/tasks/{task_id}', 'ActionController@taskUpdate');
 
-    Route::delete('actions/{action_id}', 'ActionController@actionDestroy');
-    Route::delete('actions/{action_id}/tasks/{task_id}', 'ActionController@actionTaskDestroy');
+    Route::delete('user/{user_id}/actions/{action_id}', 'ActionController@actionDestroy');
+    Route::delete('user/{user_id}/actions/{action_id}/tasks/{task_id}', 'ActionController@actionTaskDestroy');
 });

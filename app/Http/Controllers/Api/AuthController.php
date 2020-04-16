@@ -11,28 +11,27 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validatedData = $request->validate([
-            'name'=>'required|max:40',
-            'email'=>'email|required|unique:users',
-            'password'=>'required|confirmed'
+            'login' => 'required|unique:users',
+            'password' => 'required|confirmed'
         ]);
 
-        $validatedData['password'] = bcrypt ($request->password);
+        $validatedData['password'] = bcrypt($request->password);
 
         $user = User::create($validatedData);
 
         $accessToken = $user->createToken('authToken')->accessToken;
 
-        return response(['user'=> $user, 'access_token'=>$accessToken]);
-    }
+        return response(['user' => $user, 'access_token' => $accessToken]);}
+
 
     public function login(Request $request)
     {
         $loginData = $request->validate([
-            'email'=>'email|required',
+            'login'=>'required',
             'password'=>'required'
         ]);
         if(!auth()->attempt($loginData)){
-            return response(['message'=>'Комбинация логин/пароль введена неверно либо пользователь не зарегистрирован.']);
+            return response(['message'=>'Не удаётся войти. Неверный логин или пароль.']);
         }
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;

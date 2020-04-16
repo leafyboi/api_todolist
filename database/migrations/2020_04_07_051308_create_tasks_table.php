@@ -17,8 +17,10 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->string('task_name');
             $table->integer('action_id');
+            $table->integer('user_id');
             $table->boolean('mark_done');
             $table->string('description');
+            $table->integer('important');
             $table->timestamps();
         });
     }

@@ -8,7 +8,7 @@ class Action extends Model
 {
 
     protected $fillable = [
-        'action_name'
+        'action_name', 'user_id'
     ];
 
 
